@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 
 public class ParadoxTableBlock
 {
@@ -30,37 +32,20 @@ public class ParadoxTableBlock
     }
 
     public int BlockNumber { get; private set; }
-
-    public ParadoxTableBlockHeader getDbTableBlockHeader()
-    {
-        return DBTableBlockHeader;
-    }
     
-    public List<DBTableRecord> getRecords()
-    {
-        return records;
-    }
-
-    public int getRecordsPerBlock()
-    {
-        return RecordsPerBlock;
-    }
-
+    
     /**
      * read data. This assumes that the inputStream is on byte 0 from the start of the block
      */
+     /*
     public void read(PDXReaderListener pdxReaderListener, InputStream inputStream) throws Exception
     {
       try {
             records = new ArrayList<DBTableRecord>();
-            /*
-             * read the header
-             */
+            
             final LittleEndianDataInputStream littleEndianDataInputStream = new LittleEndianDataInputStream(inputStream);
             readHeader(littleEndianDataInputStream);
-            /*
-             * read the records
-             */
+           
             for (int i = 0; i < RecordsPerBlock; i++)
             {
                 final DBTableRecord pdxTableRecord = new DBTableRecord();
@@ -71,37 +56,17 @@ public class ParadoxTableBlock
             throw new Exception("Exception in read", e);
         }
     }
-
-    /**
-     * read header
-     */
-    private void readHeader(LittleEndianDataInputStream littleEndianDataInputStream) throws Exception
+*/
+    private void ReadHeader(BinaryReader reader)
     {
-      try {
-            dbTableBlockHeader = new DBTableBlockHeader();
-            dbTableBlockHeader.read(littleEndianDataInputStream);
-        } catch (final Exception e) {
-            throw new Exception("Exception in readHeader", e);
+        try
+        {
+            Header = new ParadoxTableBlockHeader();
+            Header.Read(reader);
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("Exception in readHeader", ex);
         }
     }
-
-    public void setDbTableBlockHeader(DBTableBlockHeader dbTableBlockHeader)
-    {
-        this.dbTableBlockHeader = dbTableBlockHeader;
-    }
-
-    public void setPdxFileBlockHeader(DBTableBlockHeader pdxFileBlockHeader)
-    {
-        dbTableBlockHeader = pdxFileBlockHeader;
-    }
-
-    public void setRecords(List<DBTableRecord> records)
-    {
-        this.records = records;
-    }
 }
-
-Status API Training Shop Blog About
-
-    © 2016 GitHub, Inc.Terms Privacy Security Contact Help
-

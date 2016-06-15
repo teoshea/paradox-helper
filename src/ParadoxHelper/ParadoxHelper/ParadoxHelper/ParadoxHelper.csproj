@@ -43,11 +43,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ParadoxTableBlock.cs" />
     <Compile Include="ParadoxFileHeader.cs" />
+    <Compile Include="ParadoxTableBlockHeader.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StringUtil.cs" />
     <Compile Include="TableField.cs" />
+    <Compile Include="TableRecord.cs" />
+    <Compile Include="TableValue.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
