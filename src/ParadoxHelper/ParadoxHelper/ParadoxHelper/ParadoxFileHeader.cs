@@ -20,7 +20,9 @@ public enum TableType
 
 public class ParadoxFileHeader
 {
-    public BlockSize BlockSize { get; private set; }
+    private BlockSize blockSize;
+
+    public int BlockSizeBytes => (int)blockSize * 1024;
 
     public TableType TableType { get; private set; }
 
@@ -58,7 +60,7 @@ public class ParadoxFileHeader
 
     public int CalculateRecordsPerBlock()
     {
-        return (int)BlockSize * 1024 / RecordBufferSize;
+        return BlockSizeBytes / RecordBufferSize;
     }
 
     public void Read(BinaryReader inputStream)
@@ -85,19 +87,19 @@ public class ParadoxFileHeader
             var dataBlockSizeCode = inputStream.ReadByte();
             if (dataBlockSizeCode == 1)
             {
-                BlockSize = BlockSize.OneK;
+                blockSize = BlockSize.OneK;
             }
             else if (dataBlockSizeCode == 2)
             {
-                BlockSize = BlockSize.TwoK;
+                blockSize = BlockSize.TwoK;
             }
             else if (dataBlockSizeCode == 3)
             {
-                BlockSize = BlockSize.ThreeK;
+                blockSize = BlockSize.ThreeK;
             }
             else if (dataBlockSizeCode == 4)
             {
-                BlockSize = BlockSize.FourK;
+                blockSize = BlockSize.FourK;
             }
             else
             {

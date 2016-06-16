@@ -1,25 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace ParadoxHelper
 {
     class Program
     {
+        /*
+                 * init the array
+                 */
+        
+
+
         static void Main(string[] args)
         {
-            using (var fileStream = File.OpenRead("Records.Db"))
-            {
-                using (var reader = new BinaryReader(fileStream, Encoding.Default))
-                {
-                    var header = new ParadoxFileHeader();
-                    header.Read(reader);
-                    header.Report();
-                }
-            }
+           var reader = new ParadoxFileReader();
+            reader.Read("RECORDS.DB");
+            reader.Report("RECORDS.CSV");
+
+            Console.ReadKey();
         }
     }
 }

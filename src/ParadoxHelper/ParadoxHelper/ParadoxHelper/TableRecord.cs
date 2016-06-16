@@ -1,22 +1,29 @@
 ﻿
-public class DBTableRecord
+using System;
+using System.Collections.Generic;
+using System.IO;
+using ParadoxHelper;
+
+public class TableRecord
 {
-    /**
-     * read one record
-     */
-    public void read(PDXReaderListener pdxReaderListener, List<DBTableField> fields, InputStream inputStream) throws Exception
+    public readonly List<FieldValue> Values = new List<FieldValue>();
+
+    public void Read(List<TableField> fields, BinaryReader reader)
     {
-      try {
-            final List< DBTableValue > values = new ArrayList<DBTableValue>();
-            for (final DBTableField pdxTableField : fields)
+        try
+        {
+            
+            foreach (var pdxTableField in fields)
             {
-                final DBTableValue pdxTableValue = new DBTableValue();
-                pdxTableValue.read(pdxTableField, inputStream);
-                values.add(pdxTableValue);
+                var value = new FieldValue(pdxTableField);
+                value.Read(reader);
+                Values.Add(value);
             }
-            pdxReaderListener.record(values);
-        } catch (final Exception e) {
-            throw new Exception("Exception in read", e);
+
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("Exception in read", ex);
         }
     }
 }
