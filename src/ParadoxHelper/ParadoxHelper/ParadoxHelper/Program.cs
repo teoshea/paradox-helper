@@ -1,24 +1,27 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace ParadoxHelper
 {
-    class Program
+    public class Program
     {
-        /*
-                 * init the array
-                 */
-        
-
-
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
-           var reader = new ParadoxFileReader();
-            reader.Read("RECORDS.DB");
-            reader.Report("RECORDS.CSV");
+            var reader = new ParadoxFileReader();
 
-            Console.ReadKey();
+            var inFile = args[0];
+            if (inFile == null)
+            {
+                Console.WriteLine("Usage: ParadoxHelper dbFileName");
+                return;
+            }
+
+            var outFile = Path.ChangeExtension(inFile, "csv");
+
+            reader.Read(inFile);
+            reader.Report(outFile);
         }
     }
 }
